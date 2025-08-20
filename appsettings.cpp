@@ -9,8 +9,7 @@ AppSettings::AppSettings()
 
 QString AppSettings::projectsFolder() const
 {
-    const QString defaultPath =
-        QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    const QString defaultPath {"D:/Music/25$$$"};
     return m_settings.value(QStringLiteral("projects/folder"), defaultPath).toString();
 }
 
