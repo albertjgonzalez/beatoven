@@ -1,0 +1,2 @@
+# Exclude internal docs from source archives (does not hide them on GitHub)
+docs/internal/** export-ignore
