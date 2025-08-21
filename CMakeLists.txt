@@ -13,22 +13,23 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+    main.cpp
+    mainwindow.cpp
+    mainwindow.h
+    mainwindow.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(beatoven
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        folderscanner.h
-        folderscanner.cpp
-        appsettings.h
+        services/folderscanner.cpp
+        services/folderscanner.h
         appsettings.cpp
-        AppController.h
-        appcontroller.h appcontroller.cpp
+        appsettings.h
+        appcontroller.cpp
+        appcontroller.h
+        model/collaborator.cpp model/collaborator.h model/project.cpp model/project.h model/snapshot.cpp model/snapshot.h
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET beatoven APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -38,17 +39,36 @@ else()
     if(ANDROID)
         add_library(beatoven SHARED
             ${PROJECT_SOURCES}
+            services/folderscanner.cpp
+            services/folderscanner.h
+            appsettings.cpp
+            appsettings.h
+            appcontroller.cpp
+            appcontroller.h
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
         add_executable(beatoven
             ${PROJECT_SOURCES}
+            services/folderscanner.cpp
+            services/folderscanner.h
+            appsettings.cpp
+            appsettings.h
+            appcontroller.cpp
+            appcontroller.h
         )
     endif()
 endif()
 
 target_link_libraries(beatoven PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+# Optional include paths for convenience
+target_include_directories(beatoven PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/services
+    ${CMAKE_CURRENT_SOURCE_DIR}/model
+)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

@@ -4,6 +4,7 @@
 
 #include <QFileInfo>
 #include <QDebug>
+#include <QDir>
 
 AppController::AppController(QObject* parent): QObject(parent) {}
 AppController::~AppController() = default;
@@ -12,23 +13,27 @@ void AppController::startup() {
     qDebug() << "starting up bb";
 
     AppSettings settings;
-    QString path = settings.projectsFolder();
-    QFileInfo fi(path);
+    QString path = QDir::toNativeSeparators(QFileInfo(settings.projectsFolder()).absoluteFilePath());
 
     if(path.isEmpty())
     {
         qInfo() << "No Path Found.";
-        state_ = AppController::ConfigState::NeedsSetup;
+        state_ = ConfigState::NeedsSetup;
+        return;
     }
-    else if(!fi.isAbsolute() || !fi.exists() || !fi.isDir())
+    QFileInfo fi(path);
+
+    if(!fi.isAbsolute() || !fi.exists() || !fi.isDir())
     {
        qInfo() << "Path is invalid.";
-        state_ = AppController::ConfigState::NeedsSetup;
+        state_ = ConfigState::NeedsSetup;
+       return;
     }
-    else if(!fi.isWritable())
+    else if(!fi.isWritable())//if any issues, try to create a tiny test file?
     {
         qInfo() << "Location is unwritable.";
         state_ = AppController::ConfigState::NeedsSetup;
+        return;
     }
     else
     {

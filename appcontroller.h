@@ -14,12 +14,15 @@ public:
     void startup();
     void shutdown();
     enum class ConfigState { NeedsSetup, ReadyWithRoot};
+signals:
+    needsSetup();
+    readyWithRoot(QString);
 
 private:
     ConfigState state_ {ConfigState::NeedsSetup};
 
-    
-signals:
+    void scanRoot();
+
 
 
 };

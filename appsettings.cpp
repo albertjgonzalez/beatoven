@@ -9,7 +9,7 @@ AppSettings::AppSettings()
 
 QString AppSettings::projectsFolder() const
 {
-    return m_settings.value(QStringLiteral("projects/folder")S).toString();
+    return m_settings.value(QStringLiteral("projects/folder")).toString();
 }
 
 void AppSettings::setProjectsFolder(const QString& path)
