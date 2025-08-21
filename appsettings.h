@@ -5,13 +5,14 @@
 #include <QSettings>
 
 class AppSettings {
+private:
+    QSettings m_settings;
+    
 public:
     AppSettings();
     QString projectsFolder() const;
     void setProjectsFolder(const QString& path);
 
-private:
-    QSettings m_settings;
 };
 
 #endif // APPSETTINGS_H

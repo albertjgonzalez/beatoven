@@ -13,8 +13,12 @@ public:
     ~AppController();
     void startup();
     void shutdown();
+    enum class ConfigState { NeedsSetup, ReadyWithRoot};
 
+private:
+    ConfigState state_ {ConfigState::NeedsSetup};
 
+    
 signals:
 
 

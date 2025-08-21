@@ -4,13 +4,12 @@
 AppSettings::AppSettings()
     : m_settings()
 {
-}
 
+}
 
 QString AppSettings::projectsFolder() const
 {
-    const QString defaultPath {"D:/Music/25$$$"};
-    return m_settings.value(QStringLiteral("projects/folder"), defaultPath).toString();
+    return m_settings.value(QStringLiteral("projects/folder")S).toString();
 }
 
 void AppSettings::setProjectsFolder(const QString& path)
