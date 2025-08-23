@@ -15,8 +15,8 @@ public:
     void shutdown();
     enum class ConfigState { NeedsSetup, ReadyWithRoot};
 signals:
-    needsSetup();
-    readyWithRoot(QString);
+    void needsSetup();
+    void readyWithRoot(QString);
 
 private:
     ConfigState state_ {ConfigState::NeedsSetup};
