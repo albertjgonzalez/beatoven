@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt6 COMPONENTS Widgets Sql REQUIRED)
 
 set(PROJECT_SOURCES
     main.cpp
@@ -30,6 +31,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         appcontroller.cpp
         appcontroller.h
         model/collaborator.cpp model/collaborator.h model/project.cpp model/project.h model/snapshot.cpp model/snapshot.h
+        services/appdatabase.h
+        services/appdatabase.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET beatoven APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -62,6 +65,8 @@ else()
 endif()
 
 target_link_libraries(beatoven PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(beatoven PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql)
+
 
 # Optional include paths for convenience
 target_include_directories(beatoven PRIVATE
