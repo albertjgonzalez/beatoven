@@ -7,6 +7,8 @@
 class AppSettings {
 private:
     QSettings m_settings;
+    QString m_projectDirectory;
+    QString m_dbPath;
     
 public:
     AppSettings();

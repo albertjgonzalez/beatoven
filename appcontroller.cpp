@@ -2,6 +2,7 @@
 #include "appsettings.h"
 #include "services/folderscanner.h"
 
+#include <QStandardPaths>
 #include <QFileInfo>
 #include <QDebug>
 #include <QDir>
@@ -13,7 +14,8 @@ void AppController::startup() {
     qDebug() << "starting up bb";
 
     AppSettings settings;
-    QString path = QDir::toNativeSeparators(QFileInfo(settings.projectsFolder()).absoluteFilePath());
+    //QString path = QDir::toNativeSeparators(QFileInfo(settings.projectsFolder()).absoluteFilePath());
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 
     if(path.isEmpty())
     {

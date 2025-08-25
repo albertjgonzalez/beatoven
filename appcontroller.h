@@ -1,5 +1,6 @@
 #ifndef APPCONTROLLER_H
 #define APPCONTROLLER_H
+#include "services/appdatabase.h"
 #include <QObject>
 
 
@@ -23,6 +24,7 @@ private:
 
     void scanRoot();
 
+    AppDatabase db_;
 
 
 };

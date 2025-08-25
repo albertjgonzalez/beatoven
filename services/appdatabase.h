@@ -16,7 +16,8 @@ private:
 public:
     AppDatabase();
     bool open(const QString connectionString);
-    void setupDB();
+    bool exists();
+    void setupDb();
     void close();
 
     QList<Collaborator> getCollaborators(int projectId);
