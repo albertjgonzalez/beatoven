@@ -14,8 +14,8 @@ void AppController::startup() {
     qDebug() << "starting up bb";
 
     AppSettings settings;
-    //QString path = QDir::toNativeSeparators(QFileInfo(settings.projectsFolder()).absoluteFilePath());
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QString path = QDir::toNativeSeparators(QFileInfo(settings.projectsFolder()).absoluteFilePath());
+    //QString path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 
     if(path.isEmpty())
     {
