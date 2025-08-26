@@ -18,6 +18,9 @@ set(PROJECT_SOURCES
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    settingsdialog.h
+    settingsdialog.cpp
+    SettingsDialog.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -30,7 +33,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         appsettings.h
         appcontroller.cpp
         appcontroller.h
-        model/collaborator.cpp model/collaborator.h model/project.cpp model/project.h model/snapshot.cpp model/snapshot.h
+        model/collaborator.cpp model/collaborator.h
+        model/project.cpp model/project.h
+        model/snapshot.cpp model/snapshot.h
         services/appdatabase.h
         services/appdatabase.cpp
     )

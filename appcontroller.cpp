@@ -20,6 +20,7 @@ void AppController::startup() {
     if(path.isEmpty())
     {
         qInfo() << "No Path Found.";
+        emit needsSetup();
         state_ = ConfigState::NeedsSetup;
         return;
     }
