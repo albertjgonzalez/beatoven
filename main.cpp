@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "appcontroller.h"
+#include "appsettings.h"
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -11,18 +12,23 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("BeatOven");
 
     QApplication app(argc, argv);
-    AppController controller(&app);
+
+    AppSettings* settings = new AppSettings();
 
     MainWindow w;
     w.setWindowTitle("BeatOven");
-    w.show();
+
+    QObject::connect(settings, &AppSettings::needsSetup, &w, &MainWindow::showSettingsDialog);
+    settings->checkNeedsSetup();
+
+
+    AppController controller(&app);
+
 
     QTimer::singleShot(0,&controller, &AppController::startup);
     QObject::connect(&app, &QCoreApplication::aboutToQuit,
                     &controller, &AppController::shutdown);
 
-    QObject::connect(&controller, &AppController::needsSetup,
-            &w, &MainWindow::onNeedsSetup);
-
+    w.show();
     return app.exec();
 }

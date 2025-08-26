@@ -2,11 +2,13 @@
 #define SETTINGSDIALOG_H
 
 #include <QDialog>
-namespace Ui { class SettingsDialog; }
+
+namespace Ui {
+class SettingsDialog;
+}
 
 class SettingsDialog : public QDialog
 {
-
     Q_OBJECT
 
 public:
@@ -15,7 +17,6 @@ public:
 
 private:
     Ui::SettingsDialog *ui;
-
 };
 
 #endif // SETTINGSDIALOG_H

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "settingsdialog.h"
 
 #include <QDebug>
 #include <QStandardPaths>
@@ -11,12 +12,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 }
 
-void MainWindow::onNeedsSetup()
-{
-    qInfo() << "Running Setup";
-}
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::showSettingsDialog()
+{
+    SettingsDialog dialog;
+    dialog.exec();
 }

@@ -16,7 +16,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void onNeedsSetup();
+
+    void showSettingsDialog();
 
 private:
     Ui::MainWindow *ui;

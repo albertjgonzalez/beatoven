@@ -14,14 +14,12 @@ public:
     ~AppController();
     void startup();
     void shutdown();
-    enum class ConfigState { NeedsSetup, ReadyWithRoot};
+
 signals:
     void needsSetup();
     void readyWithRoot(QString);
 
 private:
-    ConfigState state_ {ConfigState::NeedsSetup};
-
     void scanRoot();
 
     AppDatabase db_;
