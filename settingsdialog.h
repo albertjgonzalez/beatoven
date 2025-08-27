@@ -1,6 +1,8 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
+#include "appsettings.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -12,8 +14,10 @@ class SettingsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SettingsDialog(QWidget *parent = nullptr);
+    explicit SettingsDialog(AppSettings* settings, QWidget *parent = nullptr);
     ~SettingsDialog();
+
+    AppSettings* m_settings;
 
 private:
     Ui::SettingsDialog *ui;
