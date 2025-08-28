@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "appcontroller.h"
 #include "appsettings.h"
+#include "projectsmanager.h"
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -23,6 +24,9 @@ int main(int argc, char *argv[])
         w.showSettingsDialog(settings);
     });
     settings->checkNeedsSetup();
+
+    ProjectsManager projectManager;
+    projectManager.addProject(settings->projectsFolder());
 
     //next I need to load all the projects
 
