@@ -24,10 +24,12 @@ int main(int argc, char *argv[])
     });
     settings->checkNeedsSetup();
 
+    //next I need to load all the projects
 
-    QTimer::singleShot(0,&controller, &AppController::startup);
-    QObject::connect(&app, &QCoreApplication::aboutToQuit,
-                    &controller, &AppController::shutdown);
+
+    //QTimer::singleShot(0,&controller, &AppController::startup);         Might not need a controller, DOTS!!
+    //QObject::connect(&app, &QCoreApplication::aboutToQuit,
+    //                &controller, &AppController::shutdown);
 
     w.show();
     return app.exec();

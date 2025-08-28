@@ -24,26 +24,26 @@ void AppSettings::setProjectsFolder(const QString& path)
 
 void AppSettings::checkNeedsSetup()
 {
-    //need to fix this
-    const QStringList keys = m_settings.allKeys();
-    QStringList missingSettings;
+    //need to fix this,
+    const QStringList settingsList = m_settings.allKeys();
+    QStringList missingSettingsList;
 
-    if(keys.isEmpty()) {
+    if(settingsList.isEmpty()) {
         qDebug() << "Settings File is Blank";
         emit needsSetup();
     }
 
-    std::for_each(keys.begin(), keys.end(),[this, &missingSettings](const QString &key){
+    std::for_each(settingsList.begin(), settingsList.end(),[this, &missingSettingsList](const QString &key){
         if(!key.isEmpty()){
-            qDebug() << "Current Settings: " << key;
+            qDebug() << "Current Settings: " << key << " = " << m_settings.value(key).toString();
         }
         else {
-        missingSettings.append(key);
-        qDebug() << "Missing Settings: " << key;
+        missingSettingsList.append(key);
+        qDebug() << "Missing Settings: " << key << " = " << m_settings.value(key).toString();
         }
     });
 
-    if(!missingSettings.isEmpty()) {
+    if(!missingSettingsList.isEmpty()) {
         emit needsSetup();
     }
 }
