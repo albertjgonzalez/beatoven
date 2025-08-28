@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "appsettings.h"
+
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -17,9 +19,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void showSettingsDialog();
+    void showSettingsDialog(AppSettings* settings);
 
 private:
     Ui::MainWindow *ui;
+    AppSettings* m_settings;
 };
 #endif // MAINWINDOW_H

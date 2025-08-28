@@ -18,8 +18,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::showSettingsDialog()
+void MainWindow::showSettingsDialog(AppSettings* settings)
 {
-    SettingsDialog dialog;
+    SettingsDialog dialog(settings, this);
     dialog.exec();
 }

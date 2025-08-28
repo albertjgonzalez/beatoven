@@ -17,10 +17,17 @@ public:
     explicit SettingsDialog(AppSettings* settings, QWidget *parent = nullptr);
     ~SettingsDialog();
 
-    AppSettings* m_settings;
+
+
+private slots:
+    void browseForFolder();
+    void saveSettings();
 
 private:
     Ui::SettingsDialog *ui;
+    AppSettings* m_settings;
+
+
 };
 
 #endif // SETTINGSDIALOG_H

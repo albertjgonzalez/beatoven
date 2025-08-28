@@ -12,17 +12,17 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("BeatOven");
 
     QApplication app(argc, argv);
-
-    AppSettings* settings = new AppSettings();
+    AppController controller(&app);
 
     MainWindow w;
     w.setWindowTitle("BeatOven");
 
-    QObject::connect(settings, &AppSettings::needsSetup, &w, &MainWindow::showSettingsDialog);
+
+    AppSettings* settings = new AppSettings();
+    QObject::connect(settings, &AppSettings::needsSetup, [&w, settings]() {
+        w.showSettingsDialog(settings);
+    });
     settings->checkNeedsSetup();
-
-
-    AppController controller(&app);
 
 
     QTimer::singleShot(0,&controller, &AppController::startup);
