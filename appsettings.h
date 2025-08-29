@@ -11,7 +11,7 @@ private:
     QString m_projectsFolder;
     
 public:
-    AppSettings();
+    AppSettings(QObject* parent = nullptr);
     void checkNeedsSetup();
 
     QString projectsFolder() const;

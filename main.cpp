@@ -13,22 +13,24 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("BeatOven");
 
     QApplication app(argc, argv);
-    AppController controller(&app);
 
-    MainWindow w;
+    AppController controller(&app);
+    AppSettings* settings = new AppSettings(&app);
+    ProjectsManager* projectManager = new ProjectsManager(&app);
+
+    MainWindow w(settings, projectManager);
     w.setWindowTitle("BeatOven");
 
-
-    AppSettings* settings = new AppSettings();
-    QObject::connect(settings, &AppSettings::needsSetup, [&w, settings]() {
-        w.showSettingsDialog(settings);
+    QObject::connect(settings, &AppSettings::needsSetup, &w, [&w]() {
+        w.showSettingsDialog();
     });
     settings->checkNeedsSetup();
 
-    ProjectsManager projectManager;
-    projectManager.addProject(settings->projectsFolder());
+    projectManager->addProject(settings->projectsFolder());
 
-    //next I need to load all the projects
+    w.displayProjectIcons();
+
+    //next I need to display all projects from settings tempProjectsList
 
 
     //QTimer::singleShot(0,&controller, &AppController::startup);         Might not need a controller, DOTS!!

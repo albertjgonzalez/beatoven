@@ -3,15 +3,18 @@
 #include <QDir>
 #include <QDebug>
 
-ProjectsManager::ProjectsManager() {}
-
-void ProjectsManager::addProject(QString projectLocation) {
-    QDir dir(projectLocation);
-    auto files = dir.entryList();
-    for (auto file : files) {
-        qDebug() << "Adding project " << file << " to Projects List";
-        tempProjectsList.append(file);
-    }
-
+ProjectsManager::ProjectsManager(QObject* parent)
+    : QObject(parent)
+{
 }
 
+void ProjectsManager::addProject(const QString& projectLocation)
+{
+    QDir dir(projectLocation);
+    auto files = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+    for (const auto& file : files) {
+        qDebug() << "Adding project " << file << " to Projects List";
+        m_tempProjectsList.append(file);
+        emit projectAdded(file);
+    }
+}

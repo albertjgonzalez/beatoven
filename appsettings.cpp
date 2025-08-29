@@ -5,8 +5,9 @@
 
 #include <QDebug>
 
-AppSettings::AppSettings()
-    : m_settings()
+AppSettings::AppSettings(QObject* parent)
+    : QObject(parent)
+    , m_settings()
 {
     m_projectsFolder = m_settings.value(QStringLiteral("projects/folder")).toString();
 }

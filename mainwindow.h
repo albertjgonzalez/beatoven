@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "appsettings.h"
+#include "projectsmanager.h"
 
 #include <QMainWindow>
 
@@ -15,14 +16,19 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-
-    void showSettingsDialog(AppSettings* settings);
-
 private:
     Ui::MainWindow *ui;
     AppSettings* m_settings;
+    ProjectsManager* m_projectManager;
+
+public:
+    MainWindow(AppSettings* settings, ProjectsManager* projectManager, QWidget *parent = nullptr);
+    ~MainWindow();
+
+
+
+    void showSettingsDialog();
+    void displayProjectIcons();
+
 };
 #endif // MAINWINDOW_H
