@@ -6,6 +6,8 @@
 #include <QStandardPaths>
 #include <QGridLayout>
 #include <QLabel>
+#include <QFrame>
+#include <QFile>
 
 MainWindow::MainWindow(AppSettings* settings, ProjectsManager* projectManager, QWidget *parent)
     : QMainWindow(parent)
@@ -30,28 +32,45 @@ void MainWindow::showSettingsDialog()
 
 void MainWindow::displayProjectIcons()
 {
-    QWidget* content = ui->scrollAreaWidgetContents_2; // content widget of scroll area
-    if (!content) return;
+    QWidget* projectsContainer = ui->projectsContainer;
 
-    // If it doesn't have a layout yet, create a grid layout
-    QGridLayout* grid = qobject_cast<QGridLayout*>(content->layout());
+    QGridLayout* grid = qobject_cast<QGridLayout*>(projectsContainer->layout());
     if (!grid) {
-        grid = new QGridLayout(content);
-        content->setLayout(grid);
+        grid = new QGridLayout(projectsContainer);
+        projectsContainer->setLayout(grid);
     }
 
-    // clear old widgets
+
+    /*
+    qDeleteAll(grid->children());
+
     QLayoutItem* item;
     while ((item = grid->takeAt(0)) != nullptr) {
-        delete item->widget();
         delete item;
     }
+    */
 
     int row = 0, col = 0;
     const int maxCols = 3;
     for (const auto& project : m_projectManager->tempProjectsList()) {
-        QLabel* label = new QLabel(project, content); // parent = content widget
-        grid->addWidget(label, row, col);
+
+        //
+        //
+        //                                        This is where I am creating the project folder widget, please make seperate ui element
+        //
+        //  grrrrr  333 <3 ;Z) brrrr ;0 xD
+
+        QFrame* folder = new QFrame(projectsContainer);
+        folder->setFixedSize(69, 69);
+        folder->setStyleSheet("border-image: url(:/images/ProjectCube.png) 0 0 0 0 stretch stretch;");
+
+        //QLabel* label = new QLabel(project, folder);
+        QVBoxLayout* layout = new QVBoxLayout(folder);
+        layout->setAlignment(Qt::AlignCenter);
+        //layout->addWidget(label);
+        //folder->setLayout(layout);
+
+        grid->addWidget(folder, row, col);
 
         col++;
         if (col >= maxCols) {

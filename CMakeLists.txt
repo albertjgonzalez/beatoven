@@ -37,6 +37,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         services/appdatabase.cpp
         settingsdialog.h settingsdialog.cpp settingsdialog.ui
         projectsmanager.h projectsmanager.cpp
+        images.qrc
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET beatoven APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

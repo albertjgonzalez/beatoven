@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QScrollArea" name="scrollAreaWidgetContents_2">
+   <widget class="QScrollArea" name="projectsContainer">
     <property name="geometry">
      <rect>
       <x>30</x>
