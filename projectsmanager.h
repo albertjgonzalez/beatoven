@@ -17,7 +17,7 @@ public:
     const QList<Project>& projectsList() const { return m_projectsList; }
     const QList<QString>& tempProjectsList() const { return m_tempProjectsList; }
 
-    void addProject(const QString& projectLocation);
+    void setProjectsList(const QString& projectsDirectoryPath);
 
 signals:
     void projectAdded(const QString& projectName);

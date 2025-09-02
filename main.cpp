@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     });
     settings->checkNeedsSetup();
 
-    projectManager->addProject(settings->projectsFolder());
+    projectManager->setProjectsList(settings->projectsFolder());
 
     w.displayProjectIcons();
 
