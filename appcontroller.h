@@ -1,6 +1,6 @@
 #ifndef APPCONTROLLER_H
 #define APPCONTROLLER_H
-#include "services/appdatabase.h"
+
 #include <QObject>
 
 
@@ -22,7 +22,7 @@ signals:
 private:
     void scanRoot();
 
-    AppDatabase db_;
+
 
 
 };

@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "appcontroller.h"
+#include "databasemanager.h"
 #include "appsettings.h"
 #include "projectsmanager.h"
 
@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-    AppController controller(&app);
+    //AppController controller(&app);
     AppSettings* settings = new AppSettings(&app);
     ProjectsManager* projectManager = new ProjectsManager(&app);
 
@@ -29,6 +29,8 @@ int main(int argc, char *argv[])
     projectManager->setProjectsList(settings->projectsFolder());
 
     w.displayProjectIcons();
+
+
 
     //next I need to display all projects from settings tempProjectsList
 

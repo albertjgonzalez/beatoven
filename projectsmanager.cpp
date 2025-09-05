@@ -1,4 +1,5 @@
 #include "projectsmanager.h"
+#include "databasemanager.h"
 
 #include <QDir>
 #include <QDebug>
@@ -14,6 +15,8 @@ void ProjectsManager::setProjectsList(const QString& projectsDirectoryPath)
     QCryptographicHash projectHasher(QCryptographicHash::Md4);
     QDir dir(projectsDirectoryPath);
     auto files = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+
+    DatabaseManager dbManager(projectsDirectoryPath);
 
 
     //
@@ -48,6 +51,10 @@ void ProjectsManager::setProjectsList(const QString& projectsDirectoryPath)
         dir.cdUp();
         qDebug() << "Adding project " << file << " to Projects List";
         m_tempProjectsList.append(file);
+
+
+
+
         emit projectAdded(file);
     }
 }

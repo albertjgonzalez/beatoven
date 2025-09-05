@@ -33,11 +33,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         model/collaborator.cpp model/collaborator.h
         model/project.cpp model/project.h
         model/snapshot.cpp model/snapshot.h
-        services/appdatabase.h
-        services/appdatabase.cpp
+
+
         settingsdialog.h settingsdialog.cpp settingsdialog.ui
         projectsmanager.h projectsmanager.cpp
         images.qrc
+        databasemanager.h databasemanager.cpp
 
     )
 # Define target properties for Android with Qt 6 as:
