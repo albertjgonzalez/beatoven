@@ -62,7 +62,13 @@ QByteArray DatabaseManager::getStoredHash(const QString& projectName) { //------
 }
 
 void DatabaseManager::updateProject(const Project& project) {
-//--------------------add query to update hash
+    QSqlQuery query;
+    query.exec("UPDATE project SET hash = ? WHERE name = ?;");
+    query.addBindValue(project.hash());
+    query.addBindValue(project.name());
+    if(!query.exec()) {
+        qDebug() << "SQL updateproject no worky stupit" << query.lastError();
+    }
 }
 
 void DatabaseManager::addProject(const Project& project) {
@@ -72,7 +78,7 @@ void DatabaseManager::addProject(const Project& project) {
     query.addBindValue(project.path().absolutePath());
     query.addBindValue(project.hash());
     if(!query.exec()) {
-        qDebug() << "SQL no worky stupit" << query.lastError();
+        qDebug() << "SQL addproject no worky stupit" << query.lastError();
     }
 }
 

@@ -27,28 +27,27 @@ void ProjectsManager::runProjectsListSetup(const QString& projectsDirectoryPath)
         for (const auto& alsFile : alsFiles) {
 
             QString fullPath = dir.absoluteFilePath(alsFile);
-            qDebug() << file << " has Ableton file:" << alsFile;
-
-            QByteArray projectHash = calculateHash(alsFile);
-            if(dbManager.projectExists(alsFile)) {
-                QByteArray storedHash = dbManager.getStoredHash(alsFile);
-                qDebug() << "projectHash: " << projectHash << " VS. storedHash: " << storedHash;
-                if(projectHash == storedHash) {
-                    qDebug() << "Hashes Match";
-                }
-            }
+            QByteArray projectHash = calculateHash(fullPath);
 
             currentProject.setName(alsFile);
             currentProject.setHash(projectHash);
             m_projectsList.append(currentProject);
 
-            dbManager.addProject(currentProject);
+
+            if(dbManager.projectExists(alsFile)) {
+                QByteArray storedHash = dbManager.getStoredHash(alsFile);
+                if(projectHash != storedHash) dbManager.updateProject(currentProject);
+            }
+            else {
+                qDebug() << "Adding project " << currentProject.name() << " to Projects List";
+                dbManager.addProject(currentProject);
+            }
         }
+
+        dbManager.checkCollaboratorUpdates(currentProject);//----------------------------------Next step is check hash against any one who is a collaborator
+        m_projectsList.append(currentProject);
+        m_tempProjectsList.append(currentProject.name());
         dir.cdUp();
-
-        qDebug() << "Adding project " << file << " to Projects List";
-
-        m_tempProjectsList.append(file);
         emit projectAdded(file);
     }
 }
@@ -57,10 +56,10 @@ QByteArray ProjectsManager::calculateHash(const QString& filePath) {
     QCryptographicHash projectHasher(QCryptographicHash::Md4);
     QFile f(filePath);
 
-    //if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    //    qDebug() << "Error: Could not calculate hash -- File open: " << filePath;
-    //    return 0;
-    //}
+    if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Error: Could not calculate hash -- File open: " << filePath;
+        return 0;
+    }
 
     int lineNumber = 1;
     while (!f.atEnd()) {

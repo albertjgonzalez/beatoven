@@ -22,6 +22,8 @@ public:
     QByteArray getStoredHash(const QString& projectName);
     void updateProject(const Project& project);
 
+    void checkCollaboratorUpdates(const Project& project);
+
 private:
     QSqlDatabase m_db;
     QString m_dbPath;
