@@ -32,6 +32,7 @@ void ProjectsManager::runProjectsListSetup(const QString& projectsDirectoryPath)
             QByteArray projectHash = calculateHash(alsFile);
             if(dbManager.projectExists(alsFile)) {
                 QByteArray storedHash = dbManager.getStoredHash(alsFile);
+                qDebug() << "projectHash: " << projectHash << " VS. storedHash: " << storedHash;
                 if(projectHash == storedHash) {
                     qDebug() << "Hashes Match";
                 }

@@ -39,7 +39,7 @@ void DatabaseManager::setProjects(const QList<Project>& projects) {
 
 void DatabaseManager::setupNewDb() {
     QSqlQuery query;
-    query.exec("CREATE TABLE project (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, location TEXT NOT NULL, hash TEXT NOT NULL);");
+    query.exec("CREATE TABLE project (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, location TEXT NOT NULL, hash BLOB);");
 }
 
 
@@ -49,16 +49,20 @@ bool DatabaseManager::projectExists(const QString& projectName) {
     return query.next();
 }
 
-QByteArray DatabaseManager::getStoredHash(const QString& projectName) {
+QByteArray DatabaseManager::getStoredHash(const QString& projectName) { //--------------------------------NEXT STEP IS TO FIX THIS QUERY____________________
     QSqlQuery query;
-    query.exec("SELECT hash FROM project WHERE name = \"" + projectName + "\";" );
-    query.next();
-    qDebug() << query.value(0);
-    return 0;
+    query.prepare("SELECT hash FROM project WHERE name = ?;" );
+    query.addBindValue(projectName);
+    query.exec();
+    if(!query.next()) {
+        qDebug() << projectName << " is missing a hash, how tf is that even possible: " << query.lastError();
+        return 0;
+    }
+    else return query.value(0).toByteArray();
 }
 
 void DatabaseManager::updateProject(const Project& project) {
-
+//--------------------add query to update hash
 }
 
 void DatabaseManager::addProject(const Project& project) {
@@ -66,8 +70,13 @@ void DatabaseManager::addProject(const Project& project) {
     query.exec("INSERT INTO project(name, location, hash) VALUES (?,?,?)" );
     query.addBindValue(project.name());
     query.addBindValue(project.path().absolutePath());
-    query.addBindValue(project.hash().toHex());
+    query.addBindValue(project.hash());
     if(!query.exec()) {
         qDebug() << "SQL no worky stupit" << query.lastError();
     }
+}
+
+void DatabaseManager::checkCollaboratorUpdates(const Project& project)
+{
+  //---------------------------------this is where we will contact webservice!!!!!
 }
