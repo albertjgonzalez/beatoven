@@ -15,7 +15,7 @@ private:
     QDir m_path;
     QList<Collaborator> m_collaborators;
     QString m_owner;
-    QString m_mainHash;
+    QByteArray m_Hash;
     QString m_status;
     QList<Snapshot> m_snapshots;
 
@@ -35,8 +35,8 @@ public:
     QString owner() const;
     void setOwner(const QString& owner);
 
-    QString mainHash()const;
-    void setMainHash(const QString& mainHash);
+    QString hash()const;
+    void setHash(const QByteArray& hash);
 
     QString status() const;
     void setStatus(const QString& status);

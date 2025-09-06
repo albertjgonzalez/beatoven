@@ -12,7 +12,7 @@ ProjectsManager::ProjectsManager(QObject* parent)
 
 void ProjectsManager::setProjectsList(const QString& projectsDirectoryPath)
 {
-    QCryptographicHash projectHasher(QCryptographicHash::Md4);
+    QList<Project> projectsList;
     QDir dir(projectsDirectoryPath);
     auto files = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
 
@@ -27,6 +27,7 @@ void ProjectsManager::setProjectsList(const QString& projectsDirectoryPath)
 
     for (const auto& file : files) {
 
+        Project currentProject;
         auto tPath = projectsDirectoryPath + "/" + file;
         dir.cd(tPath);
         auto alsFiles = dir.entryList(QStringList() << "*.als", QDir::Files);
@@ -34,27 +35,53 @@ void ProjectsManager::setProjectsList(const QString& projectsDirectoryPath)
         for (const auto& alsFile : alsFiles) {
 
             QString fullPath = dir.absoluteFilePath(alsFile);
-            qDebug() << file << " has Ableton file:" << fullPath;
-            QFile f(fullPath);
-            if (!f.open(QIODevice::ReadOnly | QIODevice::Text))
-                return;
+            qDebug() << file << " has Ableton file:" << alsFile;
 
-             int lineNumber = 1;
-             while (!f.atEnd()) {
-                 QByteArray line = f.readLine();
-                 projectHasher.addData(line);
-                // qDebug() << "Line number " << lineNumber << " : " << line;
+            QByteArray projectHash = calculateHash(alsFile);
+            if(dbManager.projectExists(alsFile)) {
+                QByteArray storedHash = dbManager.getStoredHash(alsFile);
+                if(projectHash == storedHash) {
+                    qDebug() << "Hashes Match";
+                }
             }
-             auto result = projectHasher.result();
-            qDebug() << "The Hash is " << result;
+            currentProject.setName(alsFile);
+            currentProject.setHash(projectHash);
+
+
+
+
+
+
         }
         dir.cdUp();
+
         qDebug() << "Adding project " << file << " to Projects List";
+
+
+
         m_tempProjectsList.append(file);
-
-
-
-
         emit projectAdded(file);
     }
 }
+
+QByteArray ProjectsManager::calculateHash(const QString& filePath) {
+    QCryptographicHash projectHasher(QCryptographicHash::Md4);
+    QFile f(filePath);
+
+    //if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    //    qDebug() << "Error: Could not calculate hash -- File open: " << filePath;
+    //    return 0;
+    //}
+
+    int lineNumber = 1;
+    while (!f.atEnd()) {
+        QByteArray line = f.readLine();
+        projectHasher.addData(line);
+        // qDebug() << "Line number " << lineNumber << " : " << line;
+    }
+    auto result = projectHasher.result();
+    qDebug() << "The Hash is " << result;
+
+    return result;
+}
+

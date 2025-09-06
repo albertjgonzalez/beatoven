@@ -19,6 +19,8 @@ public:
 
     void setProjectsList(const QString& projectsDirectoryPath);
 
+    QByteArray calculateHash(const QString& projectFilePath);
+
 signals:
     void projectAdded(const QString& projectName);
 
