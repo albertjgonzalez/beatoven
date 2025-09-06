@@ -12,7 +12,9 @@ public:
     DatabaseManager(const QString& dbFilePath);
     void createNewDb();
     void setupNewDb();
+
     void setProjects(const QList<Project>& projects);
+    void addProject(const Project& project);
 
     bool projectExists(const QString& projectName);
     bool projectLatest(const QString& projectName, QByteArray projecthHash);

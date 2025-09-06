@@ -10,20 +10,12 @@ ProjectsManager::ProjectsManager(QObject* parent)
 {
 }
 
-void ProjectsManager::setProjectsList(const QString& projectsDirectoryPath)
+void ProjectsManager::runProjectsListSetup(const QString& projectsDirectoryPath)
 {
-    QList<Project> projectsList;
     QDir dir(projectsDirectoryPath);
     auto files = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
 
     DatabaseManager dbManager(projectsDirectoryPath);
-
-
-    //
-    //
-    //                             This is where we look at projects folder, create hashes, and check for updates. Please split these responsibilities.
-    //
-    //
 
     for (const auto& file : files) {
 
@@ -44,20 +36,16 @@ void ProjectsManager::setProjectsList(const QString& projectsDirectoryPath)
                     qDebug() << "Hashes Match";
                 }
             }
+
             currentProject.setName(alsFile);
             currentProject.setHash(projectHash);
+            m_projectsList.append(currentProject);
 
-
-
-
-
-
+            dbManager.addProject(currentProject);
         }
         dir.cdUp();
 
         qDebug() << "Adding project " << file << " to Projects List";
-
-
 
         m_tempProjectsList.append(file);
         emit projectAdded(file);

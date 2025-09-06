@@ -3,7 +3,9 @@
 #include <QString>
 #include <QFileInfo>
 #include <QDebug>
+#include <QDir>
 #include <QSqlQuery>
+#include <QSqlError>
 
 DatabaseManager::DatabaseManager(const QString& dbFilePath) {
 
@@ -57,4 +59,15 @@ QByteArray DatabaseManager::getStoredHash(const QString& projectName) {
 
 void DatabaseManager::updateProject(const Project& project) {
 
+}
+
+void DatabaseManager::addProject(const Project& project) {
+    QSqlQuery query;
+    query.exec("INSERT INTO project(name, location, hash) VALUES (?,?,?)" );
+    query.addBindValue(project.name());
+    query.addBindValue(project.path().absolutePath());
+    query.addBindValue(project.hash().toHex());
+    if(!query.exec()) {
+        qDebug() << "SQL no worky stupit" << query.lastError();
+    }
 }

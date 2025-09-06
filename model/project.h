@@ -35,7 +35,7 @@ public:
     QString owner() const;
     void setOwner(const QString& owner);
 
-    QString hash()const;
+    QByteArray hash()const;
     void setHash(const QByteArray& hash);
 
     QString status() const;

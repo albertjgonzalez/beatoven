@@ -47,14 +47,14 @@ void Project::setOwner(const QString& owner)
     m_owner = owner;
 }
 
-QString Project::mainHash() const
+QByteArray Project::hash() const
 {
-    return m_mainHash;
+    return m_Hash;
 }
 
-void Project::setMainHash(const QString& mainHash)
+void Project::setHash(const QByteArray& hash)
 {
-    m_mainHash = mainHash;
+    m_Hash = hash;
 }
 
 QString Project::status() const

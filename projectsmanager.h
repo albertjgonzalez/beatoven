@@ -17,7 +17,7 @@ public:
     const QList<Project>& projectsList() const { return m_projectsList; }
     const QList<QString>& tempProjectsList() const { return m_tempProjectsList; }
 
-    void setProjectsList(const QString& projectsDirectoryPath);
+    void runProjectsListSetup(const QString& projectsDirectoryPath);
 
     QByteArray calculateHash(const QString& projectFilePath);
 
